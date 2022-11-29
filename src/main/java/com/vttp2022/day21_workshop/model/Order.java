@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 
@@ -93,8 +95,6 @@ public class Order {
 
     public static Order createOrder(SqlRowSet rs, List<Product> products) {
 
-        System.out.println("inside Order.createOrder, products >>> " + products);
-
         Order o = new Order();
         o.setOrderId(rs.getString("id"));
         o.setEmployeeId(rs.getString("employee_id"));
@@ -105,22 +105,22 @@ public class Order {
         o.setShipCity(rs.getString("ship_city"));
         o.setProducts(products);
 
-        System.out.println(o.toString());
-
         return o;
     }
 
     public JsonObject toJson() {
 
-        JsonObjectBuilder builder = Json.createObjectBuilder();
+        JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
         for (Product p : products) {
-            builder.add("product_id", p.getProductId());
-            builder.add("product_name", p.getName());
-            builder.add("quantity", p.getQuantity());
-            builder.add("unit_price", p.getUnitPrice());
-            builder.add("category", p.getCategory());
+            JsonObjectBuilder objBuilder = Json.createObjectBuilder();
+            objBuilder.add("product_id", p.getProductId());
+            objBuilder.add("product_name", p.getName());
+            objBuilder.add("quantity", p.getQuantity());
+            objBuilder.add("unit_price", p.getUnitPrice());
+            objBuilder.add("category", p.getCategory());
+            arrBuilder.add(objBuilder);
         }
-        JsonObject productsObj = builder.build();
+        JsonArray productsObj = arrBuilder.build();
 
         return Json.createObjectBuilder()
                 .add("id", getOrderId())

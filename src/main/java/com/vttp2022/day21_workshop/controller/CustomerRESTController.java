@@ -83,10 +83,8 @@ public class CustomerRESTController {
             List<Order> orders = cr.getCustomerOrders(id);
 
             JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
-            for (Order o : orders) {
-                System.out.println(">>> add order...");
+            for (Order o : orders)
                 arrBuilder.add(o.toJson());
-            }
 
             JsonArray result = arrBuilder.build();
 

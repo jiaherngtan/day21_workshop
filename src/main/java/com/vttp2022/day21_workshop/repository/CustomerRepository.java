@@ -52,12 +52,11 @@ public class CustomerRepository {
 
         List<Order> orders = new LinkedList<>();
 
-        logger.info(">>> order has next? " + rs.next());
+        // logger.info(">>> order has next? " + rs.next());
 
+        // rs.previous();
         while (rs.next()) {
-            logger.info(">>> adding order...");
             List<Product> products = getCustomerOrdersDetails(rs.getString("id"));
-            logger.info(">>> adding id " + rs.getString("id"));
             orders.add(Order.createOrder(rs, products));
         }
 
@@ -72,12 +71,8 @@ public class CustomerRepository {
 
         List<Product> products = new LinkedList<>();
 
-        logger.info(">>> order details has next? " + rs.next());
-
-        while (rs.next()) {
-            logger.info(">>> adding products...");
+        while (rs.next())
             products.add(Product.createProduct(rs));
-        }
 
         return products;
 

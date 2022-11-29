@@ -56,24 +56,12 @@ public class Product {
 
     public static Product createProduct(SqlRowSet rs) {
 
-        logger.info(">>> inside createProduct fn...");
-        logger.info(">>> " + rs.getString("product_id") + " "
-                + rs.getString("product_name") + " "
-                + rs.getString("quantity") + " "
-                + rs.getString("unit_price") + " "
-                + rs.getString("category"));
-
-        // logger.info("parseInt >>> " + Integer.parseInt(rs.getString("quantity")));
-        // logger.info("parseInt >>> " + Integer.parseInt(rs.getString("unit_price")));
-
         Product p = new Product();
         p.setProductId(rs.getString("product_id"));
         p.setName(rs.getString("product_name"));
         p.setQuantity(rs.getString("quantity"));
         p.setUnitPrice(rs.getString("unit_price"));
         p.setCategory(rs.getString("category"));
-
-        logger.info(">>> product added to string: " + p.toString());
 
         return p;
     }
